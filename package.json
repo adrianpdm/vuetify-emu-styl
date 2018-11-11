@@ -1,6 +1,6 @@
 {
   "name": "vuetify-yubi",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Vuetify stylus overrides",
   "main": "index.js",
   "scripts": {
