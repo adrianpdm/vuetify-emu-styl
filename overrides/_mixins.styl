@@ -1,0 +1,42 @@
+$grid-breakpoints-prefix = {
+    xs: view-xs,
+    sm: view-sm,
+    md: view-md,
+    lg: view-lg,
+    xl: view-xl
+}
+$size-hierarchy = xs sm md lg xl
+$regex--only = '.*-only$'
+$regex--and-up = '.*-and-up$'
+$regex--and-down = '.*-and-down$'
+
+GridPrefix($target-size)
+    .{$grid-breakpoints-prefix[$target-size]} &
+        {block}
+
+DisplayPrefix($target-size)
+    $substr = substr($target-size, 0, 2)
+
+    if (match($regex--only, $target-size))
+        .{$grid-breakpoints-prefix[$substr]} &
+            {block}
+    else
+        $is-up = false
+
+        if (match($regex--and-up, $target-size))
+            $is-up = true
+        else if (match($regex--and-down, $target-size))
+            $is-up = false
+
+        $index-in-hierarchy = index($size-hierarchy, $substr)
+        $start = $is-up ? $index-in-hierarchy : 0
+        $end = $is-up ? length($size-hierarchy) - 1 : $index-in-hierarchy
+        $sels = ''
+
+        for num in $start .. $end
+            $key = $size-hierarchy[num]
+            $value = $grid-breakpoints-prefix[$key]
+            $result = '.' + $value + ' &'
+
+            {$result}
+                {block}
