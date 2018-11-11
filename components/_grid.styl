@@ -16,6 +16,9 @@
     for $size, $width in $container-max-widths
         +Override($size)
             max-width: ($width * 0.9375)
+        +Fallback()
+            @media only screen and (min-width: $width)
+                max-width: ($width * 0.9375)
 
     /*OVERRIDE
     ===========================================================
@@ -24,6 +27,9 @@
     */
     +Override(sm-and-down)
         padding: $grid-gutters.lg
+    +Fallback()
+        @media $display-breakpoints.sm-and-down
+            padding: $grid-gutters.lg
 
     &.fluid
         max-width: 100%
@@ -117,6 +123,22 @@ for $size, $width in $grid-breakpoints
             .flex.offset-{$size}{n}
                 //Offsets can only ever work in row layouts
                 margin-left: (n / $grid-columns * 100) %
+
+    +Fallback()
+        @media all and (min-width: $width)
+            for n in (1 .. $grid-columns)
+                .flex.{$size}{n}
+                    flex-basis: (n / $grid-columns * 100) %
+                    flex-grow: 0
+                    max-width: (n / $grid-columns * 100) %
+
+                .flex.order-{$size}{n}
+                    order: n
+
+            for n in (0 .. $grid-columns)
+                .flex.offset-{$size}{n}
+                    //Offsets can only ever work in row layouts
+                    margin-left: (n / $grid-columns * 100) %
 
 .flex, .child-flex > *
     flex: 1 1 auto

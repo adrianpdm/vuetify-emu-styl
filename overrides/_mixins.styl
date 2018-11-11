@@ -16,7 +16,9 @@ getClass($key)
     $grid-breakpoints-prefix[$key]
 
 Fallback()
-    :not(.emulator)
+    .emulator-ignore &
+        {block}
+    :not(.emulator) &
         {block}
 
 Override($target-size)
@@ -57,3 +59,6 @@ Override($target-size)
 
                 {$ROOT + '.' + $sel + ' &'}
                     {block}
+span
+    +Fallback()
+        width: 10px
