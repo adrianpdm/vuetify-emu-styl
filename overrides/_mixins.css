@@ -1,6 +1,3 @@
-.view-xs span {
-  width: 10px;
-}
-.emulator.view-xs span {
+.emulator.view-xl span {
   width: 10px;
 }
