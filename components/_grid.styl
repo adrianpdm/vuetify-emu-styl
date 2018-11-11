@@ -14,7 +14,7 @@
     ===========================================================
     */
     for $size, $width in $container-max-widths
-        +GridPrefix($size)
+        +Override($size)
             max-width: ($width * 0.9375)
 
     /*OVERRIDE
@@ -22,7 +22,7 @@
     @media $display-breakpoints.sm-and-down
         padding: $grid-gutters.lg
     */
-    +DisplayPrefix(sm-and-down)
+    +Override(sm-and-down)
         padding: $grid-gutters.lg
 
     &.fluid
@@ -103,7 +103,7 @@ for $size, $width in $grid-breakpoints
  */
 
 for $size, $width in $grid-breakpoints
-    +GridPrefix($size)
+    +Override($size)
         for n in (1 .. $grid-columns)
             .flex.{$size}{n}
                 flex-basis: (n / $grid-columns * 100) %

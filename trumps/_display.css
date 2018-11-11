@@ -1,0 +1,88 @@
+/* 
+// OVERRIDE
+// =============================================
+for $size, $media_query in $display-breakpoints
+  .hidden
+    &-{$size}
+      @media $media_query
+        display: none !important
+// =============================================
+ */
+.emulator.view-xs:not(.view-sm):not(.view-md):not(.view-lg):not(.view-xl) .hidden-xs-only {
+  display: none !important;
+}
+.emulator.view-xs.view-sm:not(.view-md):not(.view-lg):not(.view-xl) .hidden-sm-only {
+  display: none !important;
+}
+.emulator.view-xs .hidden-sm-and-down {
+  display: none !important;
+}
+.emulator.view-sm .hidden-sm-and-down {
+  display: none !important;
+}
+.emulator.view-sm .hidden-sm-and-up {
+  display: none !important;
+}
+.emulator.view-md .hidden-sm-and-up {
+  display: none !important;
+}
+.emulator.view-lg .hidden-sm-and-up {
+  display: none !important;
+}
+.emulator.view-xl .hidden-sm-and-up {
+  display: none !important;
+}
+.emulator.view-xs.view-sm.view-md:not(.view-lg):not(.view-xl) .hidden-md-only {
+  display: none !important;
+}
+.emulator.view-xs .hidden-md-and-down {
+  display: none !important;
+}
+.emulator.view-sm .hidden-md-and-down {
+  display: none !important;
+}
+.emulator.view-md .hidden-md-and-down {
+  display: none !important;
+}
+.emulator.view-md .hidden-md-and-up {
+  display: none !important;
+}
+.emulator.view-lg .hidden-md-and-up {
+  display: none !important;
+}
+.emulator.view-xl .hidden-md-and-up {
+  display: none !important;
+}
+.emulator.view-xs.view-sm.view-md.view-lg:not(.view-xl) .hidden-lg-only {
+  display: none !important;
+}
+.emulator.view-xs .hidden-lg-and-down {
+  display: none !important;
+}
+.emulator.view-sm .hidden-lg-and-down {
+  display: none !important;
+}
+.emulator.view-md .hidden-lg-and-down {
+  display: none !important;
+}
+.emulator.view-lg .hidden-lg-and-down {
+  display: none !important;
+}
+.emulator.view-lg .hidden-lg-and-up {
+  display: none !important;
+}
+.emulator.view-xl .hidden-lg-and-up {
+  display: none !important;
+}
+.emulator.view-xs.view-sm.view-md.view-lg.view-xl .hidden-xl-only {
+  display: none !important;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+.overflow-y-hidden {
+  overflow-y: hidden;
+}

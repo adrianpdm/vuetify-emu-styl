@@ -1,3 +1,6 @@
+/*
+// OVERRIDE
+// =====================================
 for $size, $width in $grid-breakpoints
   @media all and (min-width: $width)
     .text-{$size}-left
@@ -11,28 +14,43 @@ for $size, $width in $grid-breakpoints
 
     .text-{$size}-justify
       text-align: justify !important
+// =====================================
+ */
+for $size, $width in $grid-breakpoints
+    +Override($size)
+        .text-{$size}-left
+            text-align: left !important
+
+        .text-{$size}-center
+            text-align: center !important
+
+        .text-{$size}-right
+            text-align: right !important
+
+        .text-{$size}-justify
+            text-align: justify !important
 
 for $name, $weight in $font-weights
-  .font-weight
-    &-{$name}
-      font-weight: $weight !important
+    .font-weight
+        &-{$name}
+            font-weight: $weight !important
 
 .font-italic
-  font-style: italic !important
+    font-style: italic !important
 
 .text-capitalize
-  text-transform: capitalize !important
+    text-transform: capitalize !important
 
 .text-lowercase
-  text-transform: lowercase !important
+    text-transform: lowercase !important
 
 .text-uppercase
-  text-transform: uppercase !important
+    text-transform: uppercase !important
 
 .text-no-wrap
-  white-space: nowrap !important
+    white-space: nowrap !important
 
 .text-truncate
-  white-space: nowrap !important
-  overflow: hidden !important
-  text-overflow: ellipsis !important
+    white-space: nowrap !important
+    overflow: hidden !important
+    text-overflow: ellipsis !important

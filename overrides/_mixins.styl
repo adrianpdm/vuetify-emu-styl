@@ -1,3 +1,5 @@
+$ROOT = '.emulator'
+
 $grid-breakpoints-prefix = {
     xs: view-xs,
     sm: view-sm,
@@ -5,20 +7,34 @@ $grid-breakpoints-prefix = {
     lg: view-lg,
     xl: view-xl
 }
-$size-hierarchy = xs sm md lg xl
+$breakpoint-hierarchy = xs sm md lg xl
 $regex--only = '.*-only$'
 $regex--and-up = '.*-and-up$'
 $regex--and-down = '.*-and-down$'
 
-GridPrefix($target-size)
-    .{$grid-breakpoints-prefix[$target-size]} &
-        {block}
+getClass($key){
+    $grid-breakpoints-prefix[$key]
+}
 
-DisplayPrefix($target-size)
-    $substr = substr($target-size, 0, 2)
+Override($target-size)
+    if (length(split('', $target-size))) == 2
+        .{getClass($target-size)} &
+            {block}
 
+    $key = substr($target-size, 0, 2)
+    $key-index = index($breakpoint-hierarchy, $key)
     if (match($regex--only, $target-size))
-        .{$grid-breakpoints-prefix[$substr]} &
+        $selector = $ROOT
+        for num in 0 .. (length($breakpoint-hierarchy) - 1)
+            $thisKey = $breakpoint-hierarchy[num]
+            $thisValue = getClass($thisKey)
+            $result = '.' + $thisValue
+            
+            if (num <= $key-index)
+                $selector += $result
+            else
+                $selector += ':not(' + $result + ')'
+        {$selector} &
             {block}
     else
         $is-up = false
@@ -28,15 +44,18 @@ DisplayPrefix($target-size)
         else if (match($regex--and-down, $target-size))
             $is-up = false
 
-        $index-in-hierarchy = index($size-hierarchy, $substr)
-        $start = $is-up ? $index-in-hierarchy : 0
-        $end = $is-up ? length($size-hierarchy) - 1 : $index-in-hierarchy
+        $start = $is-up ? $key-index : 0
+        $end = $is-up ? length($breakpoint-hierarchy) - 1 : $key-index
         $sels = ''
 
         for num in $start .. $end
-            $key = $size-hierarchy[num]
-            $value = $grid-breakpoints-prefix[$key]
-            $result = '.' + $value + ' &'
+            $thisKey = $breakpoint-hierarchy[num]
+            $thisValue = getClass($thisKey)
+            $result = '.' + $thisValue + ' &'
 
-            {$result}
+            {$ROOT + $result}
                 {block}
+
+span
+    +Override(xs)
+        width: 10px
