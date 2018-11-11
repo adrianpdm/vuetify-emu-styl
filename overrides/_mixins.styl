@@ -1,4 +1,6 @@
-$ROOT = '.emulator'
+// $ROOT = "[data-query-type='element']"
+$ROOT = "*[data-query-type='element']"
+$INACTIVE-ROOT = "*[data-query-type='media']"
 
 $grid-breakpoints-prefix = {
     xs: view-xs,
@@ -16,9 +18,7 @@ getClass($key)
     $grid-breakpoints-prefix[$key]
 
 Fallback()
-    .emulator-ignore &
-        {block}
-    :not(.emulator) &
+    {$INACTIVE-ROOT} &
         {block}
 
 Override($target-size)
@@ -59,6 +59,10 @@ Override($target-size)
 
                 {$ROOT + '.' + $sel + ' &'}
                     {block}
-span
-    +Fallback()
-        width: 10px
+// span
+//     +Override(lg-and-up)
+//         width: 10px
+
+// span
+//     +Fallback()
+//         width: 10px
