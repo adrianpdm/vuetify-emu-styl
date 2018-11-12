@@ -30,17 +30,17 @@ Override($target-size)
         $key = substr($target-size, 0, 2)
         $key-index = index($breakpoint-hierarchy, $key)
         if (match($regex--only, $target-size))
-            $selector = $ROOT
-            for num in 0 .. (length($breakpoint-hierarchy) - 1)
+            $output = $ROOT
+            for num in $key-index .. (length($breakpoint-hierarchy) - 1)
                 $thisKey = $breakpoint-hierarchy[num]
-                $thisValue = getClass($thisKey)
-                $result = '.' + $thisValue
+                $val = '.' + getClass($thisKey)
                 
-                if (num <= $key-index)
-                    $selector += $result
+                if (num == $key-index)
+                    $output += $val
                 else
-                    $selector += ':not(' + $result + ')'
-            {$selector} &
+                    $output += ':not(' + $val + ')'
+
+            {$output} &
                 {block}
         else
             $is-up = false
@@ -50,19 +50,26 @@ Override($target-size)
             else if (match($regex--and-down, $target-size))
                 $is-up = false
 
-            $start = $is-up ? $key-index : 0
-            $end = $is-up ? length($breakpoint-hierarchy) - 1 : $key-index
+            $start = $is-up ? 0 : $key-index + 1
+            $end = $is-up ? $key-index - 1 : length($breakpoint-hierarchy) - 1
+            $output = $ROOT
 
             for num in $start .. $end
                 $thisKey = $breakpoint-hierarchy[num]
-                $sel = getClass($thisKey)
+                $val = getClass($thisKey)
 
-                {$ROOT + '.' + $sel + ' &'}
+                {$ROOT + ':not(.' + $val + ') &'}
                     {block}
-// span
-//     +Override(lg-and-up)
-//         width: 10px
 
-// span
-//     +Fallback()
-//         width: 10px
+// TEST CASE
+.flex.hidden-md-only
+    +Override(md-only)
+        width: 10px
+
+.flex.hidden-md-and-up
+    +Override(md-and-up)
+        width: 10px
+
+.flex.hidden-md-and-down
+    +Override(md-and-down)
+        width: 10px
