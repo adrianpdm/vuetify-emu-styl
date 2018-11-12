@@ -57,9 +57,10 @@ Override($target-size)
             for num in $start .. $end
                 $thisKey = $breakpoint-hierarchy[num]
                 $val = getClass($thisKey)
-
-                {$ROOT + ':not(.' + $val + ') &'}
-                    {block}
+                $output += ':not(.' + $val + ')'
+            
+            {$output} &
+                {block}
 
 // TEST CASE
 .flex.hidden-md-only
