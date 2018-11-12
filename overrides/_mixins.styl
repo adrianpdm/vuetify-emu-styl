@@ -1,7 +1,6 @@
-// $ROOT = "[data-query-type='element']"
+//$ROOT = "[data-query-type='element']"
 $ROOT = "*[data-query-type='element']"
 $INACTIVE-ROOT = "*[data-query-type='media']"
-
 $grid-breakpoints-prefix = {
     xs: view-xs,
     sm: view-sm,
@@ -22,19 +21,20 @@ Fallback()
         {block}
 
 Override($target-size)
-    if (length(split('', $target-size))) == 2
+    if (length(split('', $target-size)) == 2)
         {$ROOT + '.' + getClass($target-size)} &
             {block}
-
     else
         $key = substr($target-size, 0, 2)
         $key-index = index($breakpoint-hierarchy, $key)
+
         if (match($regex--only, $target-size))
             $output = $ROOT
+
             for num in $key-index .. (length($breakpoint-hierarchy) - 1)
                 $thisKey = $breakpoint-hierarchy[num]
                 $val = '.' + getClass($thisKey)
-                
+
                 if (num == $key-index)
                     $output += $val
                 else
@@ -50,27 +50,33 @@ Override($target-size)
             else if (match($regex--and-down, $target-size))
                 $is-up = false
 
-            $start = $is-up ? 0 : $key-index + 1
-            $end = $is-up ? $key-index - 1 : length($breakpoint-hierarchy) - 1
             $output = $ROOT
 
-            for num in $start .. $end
-                $thisKey = $breakpoint-hierarchy[num]
-                $val = getClass($thisKey)
-                $output += ':not(.' + $val + ')'
-            
-            {$output} &
-                {block}
+            if (!$is-up)
+                for num in ($key-index + 1 .. length($breakpoint-hierarchy) - 1)
+                    $thisKey = $breakpoint-hierarchy[num]
+                    $val = getClass($thisKey)
+                    $output += ':not(' + $val + ')'
+                {$output} &
+                    {block}
+            else
+                /* 
+                for num in $key-index .. length($breakpoint-hierarchy) - 1
+                    $thisKey = $breakpoint-hierarchy[num]
+                    $val = getClass($thisKey)
+                    $output += '.' + $val
+                */
+                $output += '.' + $key
+                {$output} &
+                    {block}
 
-// TEST CASE
-.flex.hidden-md-only
-    +Override(md-only)
+            
+
+//TEST CASE
+.flex.hidden-md-and-down
+    +Override(md-and-down)
         width: 10px
 
 .flex.hidden-md-and-up
     +Override(md-and-up)
-        width: 10px
-
-.flex.hidden-md-and-down
-    +Override(md-and-down)
         width: 10px
