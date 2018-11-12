@@ -1,42 +1,73 @@
-$ROOT = ".emulator"
-$INACTIVE-ROOT = ".emulator-ignore"
-//$ROOT = "[data-query-type='element']"
-// $ROOT = "*[data-query-type='element']"
-// $INACTIVE-ROOT = "*[data-query-type='media']"
+//=====================================================
+//AUTHOR : Adrian Padmodihardjo <adrian.pdmh@gmail.com>
+//=====================================================
+//=====================================================
+//default variables
+//can be overriden by initializing variables' value before importing this stylus file
+//READ: https://stackoverflow.com/q/27338637
+//READ: http://stylus-lang.com/docs/operators.html#conditional-assignment--
+$active-selector ?= '.emulator'
+$not-active-selector ?= '.emulator-ignore'
+$xs-prefix ?= view-xs
+$sm-prefix ?= view-sm
+$md-prefix ?= view-md
+$lg-prefix ?= view-lg
+$xl-prefix ?= view-xl
 $grid-breakpoints-prefix = {
-    xs: view-xs,
-    sm: view-sm,
-    md: view-md,
-    lg: view-lg,
-    xl: view-xl
+    xs: $xs-prefix,
+    sm: $sm-prefix,
+    md: $md-prefix,
+    lg: $lg-prefix,
+    xl: $xl-prefix
 }
+//{size}-and-<up|down> is only available from sm through lg, as stated in VuetifyJS Docs
 $invalid-breakpoints = xs-and-down, xs-and-up, xl-and-up, xl-and-down
+//display hierarchy
 $breakpoint-hierarchy = xs sm md lg xl
+//regexes to test display breakpoints
 $regex--only = '.*-only$'
 $regex--and-up = '.*-and-up$'
 $regex--and-down = '.*-and-down$'
 
+//get prefix for particular breakpoint in active state
+//READ: http://stylus-lang.com/docs/operators.html#subscript-
 getClass($key)
     $grid-breakpoints-prefix[$key]
 
+//constructor for default grid system blocks
+//READ: http://stylus-lang.com/docs/mixins.html#block-mixins
 Fallback()
-    {$INACTIVE-ROOT} &
+    {$not-active-selector} &
         {block}
 
+//constructor for viewport emulator blocks
+//READ: http://stylus-lang.com/docs/mixins.html#block-mixins
 Override($target-size)
+    //Used for flexbox breakpoint
+    //$target-size is one of <xs | sm | md | lg | xl>
+    //length(split(separator, value)) is used since Stylus can't yet compute length of strings
     if (length(split('', $target-size)) == 2)
-        {$ROOT + '.' + getClass($target-size)} &
+        {$active-selector + '.' + getClass($target-size)} &
             {block}
     else
-        if index($invalid-breakpoints, $target-size) != null
+        //check invalid breakpoints,
+        //index(list, key) is similar to Array.indexOf(value) in Javascript
+        //return empty if $target-size is invalid
+        if (index($invalid-breakpoints, $target-size) != null)
             ''
         else
+            //$target-size is one of <{size}-only | {size}-and-up | {size}-and-down>
+            //READ: http://stylus-lang.com/docs/bifs.html#substrval-start-length
             $key = substr($target-size, 0, 2)
             $key-index = index($breakpoint-hierarchy, $key)
 
+            //match(regex, val) is similar to regex.test(val)
+            //READ: http://stylus-lang.com/docs/bifs.html#matchpattern-string-flags
             if (match($regex--only, $target-size))
-                $output = $ROOT
+                $output = $active-selector
 
+                // double dot (..) means [inclusive start, inclusive end]
+                // READ: http://stylus-lang.com/docs/operators.html#range--
                 for num in $key-index .. (length($breakpoint-hierarchy) - 1)
                     $thisKey = $breakpoint-hierarchy[num]
                     $val = '.' + getClass($thisKey)
@@ -56,78 +87,30 @@ Override($target-size)
                 else if (match($regex--and-down, $target-size))
                     $is-up = false
 
-                $output = $ROOT
+                $output = $active-selector
 
                 if (!$is-up)
                     $output += '.' + getClass(xs)
-                    for num in $key-index + 1 .. length($breakpoint-hierarchy) - 1
+
+                    for num in ((($key-index + 1 .. length($breakpoint-hierarchy) - 1)))
                         $thisKey = $breakpoint-hierarchy[num]
                         $val = getClass($thisKey)
-                        if num <= $key-index
+
+                        if (num <= $key-index)
                             $output += '.' + $val
                         else
                             $output += ':not(.' + $val + ')'
+
                     {$output} &
                         {block}
                 else
-                    /* 
+                    /*
                     for num in $key-index .. length($breakpoint-hierarchy) - 1
                         $thisKey = $breakpoint-hierarchy[num]
                         $val = getClass($thisKey)
                         $output += '.' + $val
                     */
                     $output += '.' + getClass($key)
+
                     {$output} &
                         {block}
-
-            
-
-//TEST CASE
-// .xs
-//     +Override(xs)
-//         width: 10px
-// .sm
-//     +Override(sm)
-//         width: 10px
-// .md
-//     +Override(md)
-//         width: 10px
-// .lg
-//     +Override(lg)
-//         width: 10px
-// .xl
-//     +Override(xl)
-//         width: 10px
-// .xs-only
-//     +Override(xs-only)
-//         width: 10px
-// .sm-only
-//     +Override(sm-only)
-//         width: 10px
-// .md-only
-//     +Override(md-only)
-//         width: 10px
-// .lg-only
-//     +Override(lg-only)
-//         width: 10px
-// .xl-only
-//     +Override(xl-only)
-//         width: 10px
-// .sm-and-up
-//     +Override(sm-and-up)
-//         width: 10px
-// .md-and-up
-//     +Override(md-and-up)
-//         width: 10px
-// .lg-and-up
-//     +Override(lg-and-up)
-//         width: 10px
-.sm-and-down
-    +Override(sm-and-down)
-        width: 10px
-.md-and-down
-    +Override(md-and-down)
-        width: 10px
-.lg-and-down
-    +Override(lg-and-down)
-        width: 10px
