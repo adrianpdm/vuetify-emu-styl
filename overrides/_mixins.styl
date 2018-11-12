@@ -1,6 +1,8 @@
+$ROOT = "emulator"
+$INACTIVE-ROOT = "emulator-ignore"
 //$ROOT = "[data-query-type='element']"
-$ROOT = "*[data-query-type='element']"
-$INACTIVE-ROOT = "*[data-query-type='media']"
+// $ROOT = "*[data-query-type='element']"
+// $INACTIVE-ROOT = "*[data-query-type='media']"
 $grid-breakpoints-prefix = {
     xs: view-xs,
     sm: view-sm,
@@ -66,17 +68,58 @@ Override($target-size)
                     $val = getClass($thisKey)
                     $output += '.' + $val
                 */
-                $output += '.' + $key
+                $output += '.' + getClass($key)
                 {$output} &
                     {block}
 
             
 
 //TEST CASE
-.flex.hidden-md-and-down
-    +Override(md-and-down)
-        width: 10px
-
-.flex.hidden-md-and-up
-    +Override(md-and-up)
-        width: 10px
+// .xs
+//     +Override(xs)
+//         width: 10px
+// .sm
+//     +Override(sm)
+//         width: 10px
+// .md
+//     +Override(md)
+//         width: 10px
+// .lg
+//     +Override(lg)
+//         width: 10px
+// .xl
+//     +Override(xl)
+//         width: 10px
+// .xs-only
+//     +Override(xs-only)
+//         width: 10px
+// .sm-only
+//     +Override(sm-only)
+//         width: 10px
+// .md-only
+//     +Override(md-only)
+//         width: 10px
+// .lg-only
+//     +Override(lg-only)
+//         width: 10px
+// .xl-only
+//     +Override(xl-only)
+//         width: 10px
+// .sm-and-up
+//     +Override(sm-and-up)
+//         width: 10px
+// .md-and-up
+//     +Override(md-and-up)
+//         width: 10px
+// .lg-and-up
+//     +Override(lg-and-up)
+//         width: 10px
+// .sm-and-down
+//     +Override(sm-and-down)
+//         width: 10px
+// .md-and-down
+//     +Override(md-and-down)
+//         width: 10px
+// .lg-and-down
+//     +Override(lg-and-down)
+//         width: 10px
