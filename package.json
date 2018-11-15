@@ -1,7 +1,7 @@
 {
-  "name": "vuetify-emu-styl",
-  "version": "0.1.1",
-  "description": "Viewport emulator based on Vuetify grid systems.",
+  "name": "yubi-vuetify-stylus",
+  "version": "0.1.0",
+  "description": "Viewport emulator.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
