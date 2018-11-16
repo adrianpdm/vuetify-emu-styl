@@ -1,6 +1,6 @@
-@import "../bootstrap"
+@import '../bootstrap'
 
-/* 
+/*
 // OVERRIDE
 // =============================================
 for $size, $media_query in $display-breakpoints
@@ -10,17 +10,19 @@ for $size, $media_query in $display-breakpoints
         display: none !important
 // =============================================
  */
-
 for $size, $media_query in $display-breakpoints
-  .hidden-{$size}
-      +Override($size)
-        display: none !important
+    .hidden-{$size}
+        +Override($size)
+            display: none !important
+        +Fallback()
+            @media $media_query
+                display: none !important
 
 .overflow-hidden
-  overflow: hidden
+    overflow: hidden
 
 .overflow-x-hidden
-  overflow-x: hidden
+    overflow-x: hidden
 
 .overflow-y-hidden
-  overflow-y: hidden
+    overflow-y: hidden

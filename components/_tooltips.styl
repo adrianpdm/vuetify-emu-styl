@@ -29,3 +29,6 @@
         +Override(sm-and-down)
             .v-tooltip__content
                 padding: 10px 16px
+        +Fallback()
+            @media $display-breakpoints.sm-and-down
+                padding: 0 $grid-gutters.lg

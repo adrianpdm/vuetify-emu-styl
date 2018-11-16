@@ -82,7 +82,7 @@ OVERRIDE
 @media $display-breakpoints.sm-and-up
 // ===================================
  */
-+Override(sm-and-up)
+snack()
   .v-snack
     &__wrapper
       width: auto
@@ -105,6 +105,12 @@ OVERRIDE
 
     &__content .v-btn:first-of-type
       margin-left: 42px
+
++Override(sm-and-up)
+    snack()
++Fallback()
+    @media $display-breakpoints.sm-and-up
+        snack()
 
 .v-snack-transition
   &-enter-active,

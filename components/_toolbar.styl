@@ -65,6 +65,9 @@ theme(v-toolbar, 'v-toolbar')
         */
         +Override(sm-and-down)
             padding: 0 $grid-gutters.lg
+        +Fallback()
+            @media $display-breakpoints.sm-and-down
+                padding: 0 $grid-gutters.lg
 
         .v-btn--icon
             margin: 6px
@@ -91,6 +94,9 @@ theme(v-toolbar, 'v-toolbar')
             */
             +Override(sm-and-down)
                 margin-left: '-%s' % $grid-gutters.lg
+            +Fallback()
+                @media $display-breakpoints.sm-and-down
+                    padding: 0 $grid-gutters.lg
 
         > .v-list:last-child
             margin-right: '-%s' % $grid-gutters.xl
@@ -104,6 +110,9 @@ theme(v-toolbar, 'v-toolbar')
             */
             +Override(sm-and-down)
                 margin-right: '-%s' % $grid-gutters.lg
+            +Fallback()
+                @media $display-breakpoints.sm-and-down
+                    padding: 0 $grid-gutters.lg
 
     &__extension
         > .v-toolbar__title

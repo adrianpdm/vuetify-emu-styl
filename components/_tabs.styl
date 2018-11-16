@@ -56,6 +56,9 @@ theme(v-tabs__bar, 'v-tabs__bar')
              */
             +Override(xs-only)
                 padding-left: 24px
+            +Fallback()
+                @media $display-breakpoints.xs-only
+                    padding-left: 24px
 
 .v-tabs__container
     flex: 1 0 auto
@@ -94,6 +97,9 @@ theme(v-tabs__bar, 'v-tabs__bar')
              */
             +Override(sm-and-up)
                 min-width: 160px
+            +Fallback()
+                @media $display-breakpoints.sm-and-up
+                    min-width: 160px
 
     &--fixed-tabs
         .v-tabs__div
@@ -106,6 +112,9 @@ theme(v-tabs__bar, 'v-tabs__bar')
             */
             +Override(xs-only)
                 flex: 1 0 auto
+            +Fallback()
+                @media $display-breakpoints.xs-only
+                    flex: 1 0 auto
 
     &--centered, &--fixed-tabs, &--right
         > .v-tabs__div:first-child

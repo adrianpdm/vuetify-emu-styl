@@ -55,6 +55,9 @@
     &__icon
         +Override(xs-only)
             display: none
+        +Fallback()
+            @media screen and (max-width: $grid-breakpoints.sm)
+                display: none
 //Double .v-alert is intended - it increases css specificity
 //to properly set the border color where alert has set color
 //with modifier (for example "red lighten-2")

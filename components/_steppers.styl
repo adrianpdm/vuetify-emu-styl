@@ -212,10 +212,17 @@ OVERRIDE
 @media $display-breakpoints.sm-and-down
 // ======================================
  */
-+Override(sm-and-down)
+stepper()
     .v-stepper:not(.v-stepper--vertical)
         .v-stepper__label
             display: none
 
         .v-stepper__step__step
             margin-right: 0
+
++Override(sm-and-down)
+    stepper()
+
++Fallback()
+    @media $display-breakpoints.sm-and-down
+        stepper()    

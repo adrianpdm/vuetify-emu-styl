@@ -23,3 +23,6 @@
         */
         +Override(xs-only)
             max-width: none
+        +Fallback()
+            @media $display-breakpoints.xs-only
+                max-width: none
